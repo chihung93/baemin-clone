@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_banner_swiper/flutter_banner_swiper.dart';
+import 'dart:math';
 
 import '../../constant.dart';
 
@@ -39,6 +40,13 @@ class HomePage extends StatefulWidget {
     "Gà Rán",
     "Món Hàn",
     "Trà Sữa",
+  ];
+
+  List<String> vouchersPercents = [
+    "${ Random().nextInt(30)}% Off | T2-CN",
+    "${ Random().nextInt(60)}% Off | T3-T5",
+    "${ Random().nextInt(80)}% Off | T5-CN",
+    "${ Random().nextInt(99)}% Off | T7-CN",
   ];
 
   @override
@@ -223,11 +231,11 @@ class HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Image(
-                                    height: 80,
-                                    fit: BoxFit.fitWidth,
-                                    image:
-                                        AssetImage(widget.categories[index])),
-                            Center(child: Text(
+                                height: 80,
+                                fit: BoxFit.fitWidth,
+                                image: AssetImage(widget.categories[index])),
+                            Center(
+                                child: Text(
                               widget.categoriesName[index],
                               style: kTitleTextstyle.copyWith(
                                   color: Colors.black, fontSize: 14),
@@ -290,6 +298,68 @@ class HomePageState extends State<HomePage> {
                   height: 10,
                   color: Color(0xFFf4f6fc),
                 ),
+                Container(
+                  color: Colors.white,
+                  height: heightBanner/2,
+                  child: ListView.separated(
+                      itemCount: widget.vouchersPercents.length,
+                      separatorBuilder: (BuildContext context, int index) =>
+                          SizedBox(
+                            width: 0,
+                          ),
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                                padding: EdgeInsets.fromLTRB(0,16,0,16),
+                                child: Container(
+                                  color: Colors.transparent,
+                                    width: MediaQuery.of(context).size.width / 1.5,
+                                    child: Stack(
+                                      alignment: Alignment.centerLeft,
+                                      children: <Widget>[
+                                        Container(
+                                            padding: EdgeInsets.fromLTRB( MediaQuery.of(context).size.width / 12, 0, 0, 0) ,
+                                            width: MediaQuery.of(context).size.width / 1.5,
+                                            margin:EdgeInsets.fromLTRB(16, 0, 0, 0),
+                                            decoration: BoxDecoration(
+                                            color: Color(0xFF71d173),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(30.0))),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: <Widget>[
+                                              Text("Nhập HENRYCODE",style: kTitleTextstyle.copyWith(color: Colors.white,
+                                                fontFamily: "Roboto_Bold",
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14
+                                              ),),
+                                              Text(widget.vouchersPercents[index],style: kTitleTextstyle.copyWith(color: Colors.white,
+                                                  fontFamily: "Roboto_Bold",
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14
+                                              ),),
+                                            ],
+                                          ),
+                                        
+                                        
+                                        ),
+                                        Container(
+                                            width: 90,
+                                          padding:EdgeInsets.fromLTRB(0, 0, 8, 0),
+                                          alignment: Alignment.centerLeft,
+                                            color: Colors.transparent,
+                                            child:
+                                          Image.asset("assets/icons/voucher_${index+1}.png",
+                                            fit: BoxFit.fitHeight,
+                                            height: heightBanner/2))
+                                      ],
+                                    )
+                                  ),
+                        );
+                      }),
+                )
               ],
             ),
           ),
