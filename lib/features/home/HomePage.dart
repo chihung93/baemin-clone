@@ -298,6 +298,9 @@ class HomePageState extends State<HomePage> {
                   height: 10,
                   color: Color(0xFFf4f6fc),
                 ),
+                /**
+                 * Voucher
+                 * */
                 Container(
                   color: Colors.white,
                   height: heightBanner/2,
@@ -318,8 +321,12 @@ class HomePageState extends State<HomePage> {
                                     child: Stack(
                                       alignment: Alignment.centerLeft,
                                       children: <Widget>[
-                                        Container(
-                                            padding: EdgeInsets.fromLTRB( MediaQuery.of(context).size.width / 12, 0, 0, 0) ,
+                                        InkWell(
+                                          onTap: (){
+                                            _displaySnackBar(context, widget.vouchersPercents[index]);
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.fromLTRB( MediaQuery.of(context).size.width / 16, 0, 0, 0) ,
                                             width: MediaQuery.of(context).size.width / 1.5,
                                             margin:EdgeInsets.fromLTRB(16, 0, 0, 0),
                                             decoration: BoxDecoration(
@@ -332,34 +339,40 @@ class HomePageState extends State<HomePage> {
                                             children: <Widget>[
                                               Text("Nhập HENRYCODE",style: kTitleTextstyle.copyWith(color: Colors.white,
                                                 fontFamily: "Roboto_Bold",
-                                                fontWeight: FontWeight.bold,
+                                                fontWeight: FontWeight.w400,
                                                 fontSize: 14
                                               ),),
                                               Text(widget.vouchersPercents[index],style: kTitleTextstyle.copyWith(color: Colors.white,
                                                   fontFamily: "Roboto_Bold",
-                                                  fontWeight: FontWeight.bold,
+                                                  fontWeight: FontWeight.w400,
                                                   fontSize: 14
                                               ),),
                                             ],
-                                          ),
+                                          )),
                                         
                                         
                                         ),
                                         Container(
-                                            width: 90,
                                           padding:EdgeInsets.fromLTRB(0, 0, 8, 0),
                                           alignment: Alignment.centerLeft,
                                             color: Colors.transparent,
                                             child:
                                           Image.asset("assets/icons/voucher_${index+1}.png",
                                             fit: BoxFit.fitHeight,
-                                            height: heightBanner/2))
+                                            height: heightBanner/2)),
+                                        Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width /1.7, 0, 0, 0),
+                                        child: Icon(Icons.navigate_next,color: Colors.white70),
+                                        )
                                       ],
                                     )
                                   ),
                         );
                       }),
-                )
+                ),
+                Container(
+                  height: 10,
+                  color: Color(0xFFf4f6fc),
+                ),
               ],
             ),
           ),
