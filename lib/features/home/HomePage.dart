@@ -43,10 +43,17 @@ class HomePage extends StatefulWidget {
   ];
 
   List<String> vouchersPercents = [
-    "${ Random().nextInt(30)}% Off | T2-CN",
-    "${ Random().nextInt(60)}% Off | T3-T5",
-    "${ Random().nextInt(80)}% Off | T5-CN",
-    "${ Random().nextInt(99)}% Off | T7-CN",
+    "${Random().nextInt(30)}% Off | T2-CN",
+    "${Random().nextInt(60)}% Off | T3-T5",
+    "${Random().nextInt(80)}% Off | T5-CN",
+    "${Random().nextInt(99)}% Off | T7-CN",
+  ];
+
+  List<String> foodRecommendationToday = [
+    "Khao bạn ${Random().nextInt(30)}K menu này nha",
+    "Khao bạn ${Random().nextInt(80)}K menu này nha",
+    "Khao bạn ${Random().nextInt(123)}K menu này nha",
+    "Khao bạn ${Random().nextInt(212)}K menu này nha",
   ];
 
   @override
@@ -56,6 +63,7 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
+  double heightBanner = 0;
   int _currentBanner = 0;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -66,7 +74,7 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    double heightBanner = MediaQuery.of(context).size.height / 4;
+    heightBanner = MediaQuery.of(context).size.height / 4;
     return Scaffold(
         key: _scaffoldKey,
         primary: false,
@@ -141,241 +149,373 @@ class HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-
-                /**
-                 * Slider
-                 * */
-                Stack(
-                  alignment: Alignment.bottomRight,
-                  children: <Widget>[
-                    CarouselSlider(
-                      items: widget.banners
-                          .map((item) => Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: heightBanner,
-                                child: Center(
-                                    child: Image(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        height: heightBanner,
-                                        fit: BoxFit.cover,
-                                        image: AssetImage(item))),
-                              ))
-                          .toList(),
-                      carouselController: widget.bannerController,
-                      options: CarouselOptions(
-                          autoPlay: true,
-                          autoPlayInterval: Duration(seconds: 1),
-                          onPageChanged: (pageIndex, _) {
-                            setState(() {
-                              _currentBanner = pageIndex;
-                            });
-                          }),
-                    ),
-                    Align(
-                        alignment: Alignment.bottomRight,
-                        child: GestureDetector(
-                            onTap: () {
-                              widget.bannerController.nextPage(
-                                  duration: Duration(milliseconds: 300),
-                                  curve: Curves.linear);
-                            },
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
-                              alignment: Alignment.center,
-                              height: 35,
-                              width: 65,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFeaf0d6).withOpacity(0.8),
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20.0),
-                                    bottomLeft: Radius.circular(20.0)),
-                              ),
-                              child: Row(
-                                children: <Widget>[
-                                  Padding(
-                                      padding: EdgeInsets.fromLTRB(16, 0, 0, 0),
-                                      child: Text(
-                                        "${_currentBanner + 1}/${widget.banners.length}",
-                                        style: kTitleTextstyle.copyWith(
-                                            fontSize: 14,
-                                            fontFamily: "Roboto_Bold",
-                                            color: Colors.black),
-                                      )),
-                                  Icon(
-                                    Icons.navigate_next,
-                                    color: Colors.black,
-                                  )
-                                ],
-                              ),
-                            )))
-                  ],
-                ),
-
-                /**
-                 * Categories
-                 * */
-                GridView.count(
-                  childAspectRatio: 1.0,
-                  shrinkWrap: true,
-                  crossAxisCount: 4,
-                  children: List.generate(widget.categories.length, (index) {
-                    return InkWell(
-                        onTap: () {
-                          _displaySnackBar(
-                              context, widget.categoriesName[index]);
-                        },
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Image(
-                                height: 80,
-                                fit: BoxFit.fitWidth,
-                                image: AssetImage(widget.categories[index])),
-                            Center(
-                                child: Text(
-                              widget.categoriesName[index],
-                              style: kTitleTextstyle.copyWith(
-                                  color: Colors.black, fontSize: 14),
-                            )),
-                          ],
-                        ));
-                  }),
-                ),
-                Container(
-                  height: 10,
-                  color: Color(0xFFf4f6fc),
-                ),
-                InkWell(
-                    onTap: () {},
-                    child: Padding(
-                        padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Image(
-                              image: AssetImage("assets/icons/voucher.png"),
-                              width: 20,
-                              height: 17,
-                            ),
-                            Expanded(
-                                child: RichText(
-                              text: TextSpan(
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.black,
-                                ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: '   Bạn ơi,',
-                                      style: kNomalTextStyle.copyWith(
-                                          fontFamily: "Roboto_Regular")),
-                                  TextSpan(
-                                      text: '12',
-                                      style: kNomalTextStyle.copyWith(
-                                          fontFamily: "Roboto_Bold",
-                                          fontWeight: FontWeight.bold,
-                                          color: kColorAccent)),
-                                  TextSpan(
-                                      text: ' mã giảm giá vẫy gọi nè',
-                                      style: kNomalTextStyle.copyWith(
-                                          fontFamily: "Roboto_Regular")),
-                                ],
-                              ),
-                            )),
-                            Text("Xem",
-                                style: kNomalTextStyle.copyWith(
-                                    fontFamily: "Roboto_Bold",
-                                    fontWeight: FontWeight.bold,
-                                    color: kColorAccent))
-                          ],
-                        ))),
-                Container(
-                  height: 10,
-                  color: Color(0xFFf4f6fc),
-                ),
-                /**
-                 * Voucher
-                 * */
-                Container(
-                  color: Colors.white,
-                  height: heightBanner/2,
-                  child: ListView.separated(
-                      itemCount: widget.vouchersPercents.length,
-                      separatorBuilder: (BuildContext context, int index) =>
-                          SizedBox(
-                            width: 0,
-                          ),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                                padding: EdgeInsets.fromLTRB(0,16,0,16),
-                                child: Container(
-                                  color: Colors.transparent,
-                                    width: MediaQuery.of(context).size.width / 1.5,
-                                    child: Stack(
-                                      alignment: Alignment.centerLeft,
-                                      children: <Widget>[
-                                        InkWell(
-                                          onTap: (){
-                                            _displaySnackBar(context, widget.vouchersPercents[index]);
-                                          },
-                                          child: Container(
-                                            padding: EdgeInsets.fromLTRB( MediaQuery.of(context).size.width / 16, 0, 0, 0) ,
-                                            width: MediaQuery.of(context).size.width / 1.5,
-                                            margin:EdgeInsets.fromLTRB(16, 0, 0, 0),
-                                            decoration: BoxDecoration(
-                                            color: Color(0xFF71d173),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(30.0))),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: <Widget>[
-                                              Text("Nhập HENRYCODE",style: kTitleTextstyle.copyWith(color: Colors.white,
-                                                fontFamily: "Roboto_Bold",
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 14
-                                              ),),
-                                              Text(widget.vouchersPercents[index],style: kTitleTextstyle.copyWith(color: Colors.white,
-                                                  fontFamily: "Roboto_Bold",
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 14
-                                              ),),
-                                            ],
-                                          )),
-                                        
-                                        
-                                        ),
-                                        Container(
-                                          padding:EdgeInsets.fromLTRB(0, 0, 8, 0),
-                                          alignment: Alignment.centerLeft,
-                                            color: Colors.transparent,
-                                            child:
-                                          Image.asset("assets/icons/voucher_${index+1}.png",
-                                            fit: BoxFit.fitHeight,
-                                            height: heightBanner/2)),
-                                        Padding(padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width /1.7, 0, 0, 0),
-                                        child: Icon(Icons.navigate_next,color: Colors.white70),
-                                        )
-                                      ],
-                                    )
-                                  ),
-                        );
-                      }),
-                ),
-                Container(
-                  height: 10,
-                  color: Color(0xFFf4f6fc),
-                ),
+                Expanded(
+                    child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        itemCount: 10,
+                        itemBuilder: (BuildContext context, int position) {
+                          switch (position) {
+                            case 0:
+                              return _slider(context);
+                            case 1:
+                              return _categories(context);
+                            case 2:
+                              return _divider(context);
+                            case 3:
+                              return _vouchersCount(context);
+                            case 4:
+                              return _divider(context);
+                            case 5:
+                              return _discountTime(context);
+                            case 6:
+                              return _divider(context);
+                            case 7:
+                              return _foodRecommendationToday(context);
+                            default:
+                              return _divider(context);
+                          }
+                        })),
               ],
             ),
           ),
         ));
+  }
+
+  /// Slider
+  Widget _slider(BuildContext context) {
+    return Stack(
+      alignment: Alignment.bottomRight,
+      children: <Widget>[
+        CarouselSlider(
+          items: widget.banners
+              .map((item) => Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: heightBanner,
+                    child: Center(
+                        child: Image(
+                            width: MediaQuery.of(context).size.width,
+                            height: heightBanner,
+                            fit: BoxFit.cover,
+                            image: AssetImage(item))),
+                  ))
+              .toList(),
+          carouselController: widget.bannerController,
+          options: CarouselOptions(
+              autoPlay: true,
+              autoPlayInterval: Duration(seconds: 1),
+              onPageChanged: (pageIndex, _) {
+                setState(() {
+                  _currentBanner = pageIndex;
+                });
+              }),
+        ),
+        Align(
+            alignment: Alignment.bottomRight,
+            child: GestureDetector(
+                onTap: () {
+                  widget.bannerController.nextPage(
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.linear);
+                },
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
+                  alignment: Alignment.center,
+                  height: 35,
+                  width: 65,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFeaf0d6).withOpacity(0.8),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20.0),
+                        bottomLeft: Radius.circular(20.0)),
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                          padding: EdgeInsets.fromLTRB(16, 0, 0, 0),
+                          child: Text(
+                            "${_currentBanner + 1}/${widget.banners.length}",
+                            style: kTitleTextstyle.copyWith(
+                                fontSize: 14,
+                                fontFamily: "Roboto_Bold",
+                                color: Colors.black),
+                          )),
+                      Icon(
+                        Icons.navigate_next,
+                        color: Colors.black,
+                      )
+                    ],
+                  ),
+                )))
+      ],
+    );
+  }
+
+  /// Categories
+  Widget _categories(BuildContext context) {
+    return GridView.count(
+      physics: NeverScrollableScrollPhysics(),
+      childAspectRatio: 1.0,
+      shrinkWrap: true,
+      crossAxisCount: 4,
+      children: List.generate(widget.categories.length, (index) {
+        return InkWell(
+            onTap: () {
+              _displaySnackBar(context, widget.categoriesName[index]);
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image(
+                    height: 80,
+                    fit: BoxFit.fitWidth,
+                    image: AssetImage(widget.categories[index])),
+                Center(
+                    child: Text(
+                  widget.categoriesName[index],
+                  style: kTitleTextstyle.copyWith(
+                      color: Colors.black, fontSize: 14),
+                )),
+              ],
+            ));
+      }),
+    );
+  }
+
+  /// Divider
+  Widget _divider(BuildContext context) {
+    return Container(
+      height: 10,
+      color: Color(0xFFf4f6fc),
+    );
+  }
+
+  /// Vouchers
+  Widget _vouchersCount(BuildContext context) {
+    return InkWell(
+        onTap: () {},
+        child: Padding(
+            padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Image(
+                  image: AssetImage("assets/icons/voucher.png"),
+                  width: 20,
+                  height: 17,
+                ),
+                Expanded(
+                    child: RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.black,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: '   Bạn ơi,',
+                          style: kNomalTextStyle.copyWith(
+                              fontFamily: "Roboto_Regular")),
+                      TextSpan(
+                          text: '12',
+                          style: kNomalTextStyle.copyWith(
+                              fontFamily: "Roboto_Bold",
+                              fontWeight: FontWeight.bold,
+                              color: kColorAccent)),
+                      TextSpan(
+                          text: ' mã giảm giá vẫy gọi nè',
+                          style: kNomalTextStyle.copyWith(
+                              fontFamily: "Roboto_Regular")),
+                    ],
+                  ),
+                )),
+                Text("Xem",
+                    style: kNomalTextStyle.copyWith(
+                        fontFamily: "Roboto_Bold",
+                        fontWeight: FontWeight.bold,
+                        color: kColorAccent))
+              ],
+            )));
+  }
+
+  /// Discount time
+  Widget _discountTime(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      height: heightBanner / 2,
+      child: ListView.separated(
+          itemCount: widget.vouchersPercents.length,
+          separatorBuilder: (BuildContext context, int index) => SizedBox(
+                width: 0,
+              ),
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
+              child: Container(
+                  color: Colors.transparent,
+                  width: MediaQuery.of(context).size.width / 1.5,
+                  child: Stack(
+                    alignment: Alignment.centerLeft,
+                    children: <Widget>[
+                      InkWell(
+                        onTap: () {
+                          _displaySnackBar(
+                              context, widget.vouchersPercents[index]);
+                        },
+                        child: Container(
+                            padding: EdgeInsets.fromLTRB(
+                                MediaQuery.of(context).size.width / 16,
+                                0,
+                                0,
+                                0),
+                            width: MediaQuery.of(context).size.width / 1.5,
+                            margin: EdgeInsets.fromLTRB(16, 0, 0, 0),
+                            decoration: BoxDecoration(
+                                color: Color(0xFF71d173),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30.0))),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  "Nhập HENRYCODE",
+                                  style: kTitleTextstyle.copyWith(
+                                      color: Colors.white,
+                                      fontFamily: "Roboto_Bold",
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14),
+                                ),
+                                Text(
+                                  widget.vouchersPercents[index],
+                                  style: kTitleTextstyle.copyWith(
+                                      color: Colors.white,
+                                      fontFamily: "Roboto_Bold",
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14),
+                                ),
+                              ],
+                            )),
+                      ),
+                      Container(
+                          padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                          alignment: Alignment.centerLeft,
+                          color: Colors.transparent,
+                          child: Image.asset(
+                              "assets/icons/voucher_${index + 1}.png",
+                              fit: BoxFit.fitHeight,
+                              height: heightBanner / 2)),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(
+                            MediaQuery.of(context).size.width / 1.7, 0, 0, 0),
+                        child: Icon(Icons.navigate_next, color: Colors.white70),
+                      )
+                    ],
+                  )),
+            );
+          }),
+    );
+  }
+
+  Widget _foodRecommendationToday(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      height: heightBanner,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+            child: Text(
+              "Hôm nay ăn gì?",
+              style: kTitleTextstyle,
+            ),
+          ),
+          Expanded(
+            child: ListView.separated(
+                itemCount: widget.foodRecommendationToday.length,
+                separatorBuilder: (BuildContext context, int index) => SizedBox(
+                      width: 0,
+                    ),
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    margin: EdgeInsets.fromLTRB(
+                        16,
+                        16,
+                        index == widget.foodRecommendationToday.length - 1 ? 16 : 0,
+                        16),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              "https://i.ndtvimg.com/i/2016-12/food-articles-620_620x330_81481705304.jpg"),
+                          fit: BoxFit.cover,
+                        ),
+                        border: Border.all(
+                          color: Colors.white70, //
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                    width: MediaQuery.of(context).size.width / 1.5,
+                    child: Material(
+                      color: Colors.white.withOpacity(0.0),
+                      child: InkWell(
+                        onTap: () {
+                          _displaySnackBar(
+                              context, widget.foodRecommendationToday[index]);
+                        },
+                        child: Container(
+                          decoration: new BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                            color: Colors.purple,
+                            gradient: new LinearGradient(
+                                colors: [
+                                  Colors.transparent,
+                                  Colors.grey.withOpacity(0.7),
+                                ],
+                                stops: [0.0, 1.0],
+                                begin: FractionalOffset.topCenter,
+                                end: FractionalOffset.bottomCenter,
+                                tileMode: TileMode.repeated
+                            ),
+                          ),
+                          padding: EdgeInsets.all(16),
+                          width: MediaQuery.of(context).size.width / 1.5,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "Lần đầu order Beamin thì ăn gì?",
+                                style: kTitleTextstyle.copyWith(
+                                    color: Colors.white,
+                                    fontFamily: "Roboto_Bold",
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14),
+                              ),
+                              SizedBox(height: 5,),
+                              Text(
+                                widget.foodRecommendationToday[index],
+                                style: kTitleTextstyle.copyWith(
+                                    color: Colors.white,
+                                    fontFamily: "Roboto_Bold",
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12),
+                              ),
+                            ],
+                          )),
+                    ),
+                  ));
+                }),
+          )
+        ],
+      ),
+    );
   }
 }
