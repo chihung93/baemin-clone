@@ -56,6 +56,20 @@ class HomePage extends StatefulWidget {
     "Khao bạn ${Random().nextInt(212)}K menu này nha",
   ];
 
+  List<String> address = [
+    "Ozzy - Nguyễn Đức cảnh",
+    "Yến Chân Long - Dương Quảng Hàm",
+    "Farmers' Market Nguyễn Thị Thập",
+    "GoGi House Nguyễn Thị Thập",
+  ];
+
+  List<String> foodPhoto = [
+    "https://www.remotelands.com/travelogues/app/uploads/2018/05/Anan_3.jpg",
+    "https://everydaymonkey.com/wp-content/uploads/2018/09/leesamantha.jpg",
+    "https://mymodernmet.com/wp/wp-content/uploads/2017/06/food-art-healthy-desserts-foodbites-1-1.jpg",
+    "https://4.bp.blogspot.com/-rPf2o5NAos4/UmFkcLePN4I/AAAAAAAABMw/4AudqcQFKzw/s1600/food+art7.jpg",
+  ];
+
   @override
   State<StatefulWidget> createState() {
     return new HomePageState();
@@ -152,25 +166,21 @@ class HomePageState extends State<HomePage> {
                 Expanded(
                     child: ListView.builder(
                         scrollDirection: Axis.vertical,
-                        itemCount: 10,
+                        itemCount: 12,
                         itemBuilder: (BuildContext context, int position) {
                           switch (position) {
                             case 0:
                               return _slider(context);
                             case 1:
                               return _categories(context);
-                            case 2:
-                              return _divider(context);
                             case 3:
                               return _vouchersCount(context);
-                            case 4:
-                              return _divider(context);
                             case 5:
                               return _discountTime(context);
-                            case 6:
-                              return _divider(context);
                             case 7:
                               return _foodRecommendationToday(context);
+                            case 9:
+                              return _foodRecommendationPromo(context);
                             default:
                               return _divider(context);
                           }
@@ -425,7 +435,7 @@ class HomePageState extends State<HomePage> {
   Widget _foodRecommendationToday(BuildContext context) {
     return Container(
       color: Colors.white,
-      height: heightBanner,
+      height: heightBanner + heightBanner / 8,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -447,71 +457,182 @@ class HomePageState extends State<HomePage> {
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
-                    margin: EdgeInsets.fromLTRB(
-                        16,
-                        16,
-                        index == widget.foodRecommendationToday.length - 1 ? 16 : 0,
-                        16),
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(
-                              "https://i.ndtvimg.com/i/2016-12/food-articles-620_620x330_81481705304.jpg"),
-                          fit: BoxFit.cover,
-                        ),
-                        border: Border.all(
-                          color: Colors.white70, //
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                    width: MediaQuery.of(context).size.width / 1.5,
-                    child: Material(
-                      color: Colors.white.withOpacity(0.0),
-                      child: InkWell(
-                        onTap: () {
-                          _displaySnackBar(
-                              context, widget.foodRecommendationToday[index]);
-                        },
-                        child: Container(
-                          decoration: new BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            color: Colors.purple,
-                            gradient: new LinearGradient(
-                                colors: [
-                                  Colors.transparent,
-                                  Colors.grey.withOpacity(0.7),
-                                ],
-                                stops: [0.0, 1.0],
-                                begin: FractionalOffset.topCenter,
-                                end: FractionalOffset.bottomCenter,
-                                tileMode: TileMode.repeated
-                            ),
+                      margin: EdgeInsets.fromLTRB(
+                          16,
+                          16,
+                          index == widget.foodRecommendationToday.length - 1
+                              ? 16
+                              : 0,
+                          16),
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                "https://i.ndtvimg.com/i/2016-12/food-articles-620_620x330_81481705304.jpg"),
+                            fit: BoxFit.cover,
                           ),
-                          padding: EdgeInsets.all(16),
-                          width: MediaQuery.of(context).size.width / 1.5,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "Lần đầu order Beamin thì ăn gì?",
-                                style: kTitleTextstyle.copyWith(
-                                    color: Colors.white,
-                                    fontFamily: "Roboto_Bold",
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14),
+                          border: Border.all(
+                            color: Colors.white70, //
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                      width: MediaQuery.of(context).size.width / 1.5,
+                      child: Material(
+                        color: Colors.white.withOpacity(0.0),
+                        child: InkWell(
+                          onTap: () {
+                            _displaySnackBar(
+                                context, widget.foodRecommendationToday[index]);
+                          },
+                          child: Container(
+                              decoration: new BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5.0)),
+                                color: Colors.purple,
+                                gradient: new LinearGradient(
+                                    colors: [
+                                      Colors.transparent,
+                                      Colors.grey.withOpacity(0.7),
+                                    ],
+                                    stops: [
+                                      0.0,
+                                      1.0
+                                    ],
+                                    begin: FractionalOffset.topCenter,
+                                    end: FractionalOffset.bottomCenter,
+                                    tileMode: TileMode.repeated),
                               ),
-                              SizedBox(height: 5,),
-                              Text(
-                                widget.foodRecommendationToday[index],
-                                style: kTitleTextstyle.copyWith(
-                                    color: Colors.white,
-                                    fontFamily: "Roboto_Bold",
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12),
-                              ),
-                            ],
-                          )),
+                              padding: EdgeInsets.all(16),
+                              width: MediaQuery.of(context).size.width / 1.5,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "Lần đầu order Beamin thì ăn gì?",
+                                    style: kTitleTextstyle.copyWith(
+                                        color: Colors.white,
+                                        fontFamily: "Roboto_Bold",
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    widget.foodRecommendationToday[index],
+                                    style: kTitleTextstyle.copyWith(
+                                        color: Colors.white,
+                                        fontFamily: "Roboto_Bold",
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 12),
+                                  ),
+                                ],
+                              )),
+                        ),
+                      ));
+                }),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _foodRecommendationPromo(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      height: heightBanner + heightBanner / 8,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "BEAMIN Đi Chợ - FREESHIP",
+                  style: kTitleTextstyle,
+                ),
+                Material(
+                    color: Colors.white.withOpacity(0.0),
+                    child: InkWell(
+                        onTap: (){},
+                        child: Text("Xem",
+                    style: kNomalTextStyle.copyWith(
+                        fontFamily: "Roboto_Bold",
+                        fontWeight: FontWeight.bold,
+                        color: kColorAccent))))
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.separated(
+                itemCount: widget.address.length,
+                separatorBuilder: (BuildContext context, int index) => SizedBox(
+                      width: 8,
                     ),
-                  ));
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext context, int index) {
+                  return Material(
+                      color: Colors.white.withOpacity(0.0),
+                  child: InkWell(
+                      onTap: (){
+                        _displaySnackBar(context, widget.address[index]);
+                      },
+                      child: Container(
+                    margin: EdgeInsets.fromLTRB(index == 0 ? 16:0, 16, widget.foodRecommendationToday.length -1 == index ? 16:0, 16),
+                      color: Colors.transparent,
+                      width: MediaQuery.of(context).size.width / 2.5,
+                      child: Stack(
+                        alignment: Alignment.topLeft,
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              Expanded(child:Container(
+                                  margin: EdgeInsets.fromLTRB(8, 8, 0, 0),
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                            widget.foodPhoto[index]),
+                                        fit: BoxFit.cover,
+                                      ),
+                                      border: Border.all(
+                                        color: Colors.white70, //
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(5.0))),
+                                  )),
+                              Stack(
+                                children: <Widget>[
+                                  Padding(
+                                      padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
+                                      child: Image.asset(
+                                        "assets/icons/flag.png",
+                                        fit: BoxFit.fitWidth,
+                                        width: 15,
+                                      )),
+                                  Padding(
+                                      padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
+                                      child: Text(
+                                        "     ${widget.address[index]}",
+                                        maxLines: 2,
+                                        style: kNomalTextStyle.copyWith(color: Colors.black,fontFamily: "Roboto_Medium",fontWeight: FontWeight.w500),
+                                      ))
+                                ],
+                              )
+                            ],
+                          ),
+                          Image.asset(
+                            "assets/icons/promo.png",
+                            fit: BoxFit.fitHeight,
+                            height: 20,
+                          )
+                        ],
+                      ))));
                 }),
           )
         ],
