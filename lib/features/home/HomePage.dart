@@ -61,6 +61,26 @@ class HomePage extends StatefulWidget {
     "Yến Chân Long - Dương Quảng Hàm",
     "Farmers' Market Nguyễn Thị Thập",
     "GoGi House Nguyễn Thị Thập",
+    "3G Trois Gourmands Saigon",
+    "4Ps Pizza Saigon",
+    "Au Lac do Brazil",
+    "Bamboo Chic Restaurant Saigon",
+    "Banh Mi 37",
+    "Banh Xeo 46A",
+    "Bun Bo Xu",
+    "Cafe Cardinal Saigon",
+    "Camargue",
+    "Cantina Central",
+    "Cobalt Wine Bar & Restaurant",
+    "Din Ky Restaurant Saigon",
+    "EON 51 Fine Dining Saigon",
+    "Hideaway Café Saigon",
+    "ID Café Saigon",
+    "La Cuisine",
+    "La Brasserie at Hotel Nikko Saigon",
+    "New York Steakhouse & Winery",
+    "Nguyen Thi Thanh (The Lunch Lady)",
+    "The Refinery Bar and Restaurant",
   ];
 
   List<String> foodPhoto = [
@@ -68,6 +88,16 @@ class HomePage extends StatefulWidget {
     "https://everydaymonkey.com/wp-content/uploads/2018/09/leesamantha.jpg",
     "https://mymodernmet.com/wp/wp-content/uploads/2017/06/food-art-healthy-desserts-foodbites-1-1.jpg",
     "https://4.bp.blogspot.com/-rPf2o5NAos4/UmFkcLePN4I/AAAAAAAABMw/4AudqcQFKzw/s1600/food+art7.jpg",
+    "https://media-cdn.tripadvisor.com/media/photo-s/13/cc/26/08/grilled-sea-bass-chef.jpg",
+    "https://www.abudhabitalking.com/wp-content/uploads/2019/02/CP_IMG_3836-1-768x512.jpg",
+    "https://www.itourvn.com/images/easyblog_articles/828/b2ap3_large_a-bite-1.jpg",
+    "https://media.cooky.vn/article/s640/Article2696-636111865848504395.jpg",
+    "https://www.asia-bars.com/wp-content/uploads/2017/09/Vietnam-House-Wagyu-Beef-Pho-I.jpg",
+    "https://ahima17.discoverlosangeles.com/sites/default/files/styles/listography_image/public/media/restaurants/ramen-champ-tonkotsu-ramen-chinatown.jpg",
+    "https://www.itourvn.com/images/easyblog_articles/681/vietnamese-rice-paper-wrappers-cover.jpg",
+    "https://yummyvietnam.net/wp-content/uploads/2019/12/Banh-trang-nuong-recipe%E2%80%93Vietnamese-grilled-rice-paper-11.jpg",
+    "https://vietnamcoracle.com/wp-content/uploads/2018/05/IMG_3385-copy-blog-1024x768.jpg",
+    "https://media-cdn.tripadvisor.com/media/photo-s/16/a9/6c/16/waffles-with-banana-balsamic.jpg",
   ];
 
   @override
@@ -166,7 +196,7 @@ class HomePageState extends State<HomePage> {
                 Expanded(
                     child: ListView.builder(
                         scrollDirection: Axis.vertical,
-                        itemCount: 12,
+                        itemCount: 40,
                         itemBuilder: (BuildContext context, int position) {
                           switch (position) {
                             case 0:
@@ -181,8 +211,46 @@ class HomePageState extends State<HomePage> {
                               return _foodRecommendationToday(context);
                             case 9:
                               return _foodRecommendationPromo(context);
+                            case 11:
+                              return Padding(
+                                  padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+                                  child: Text(
+                                    "Restaurants Near You",
+                                    style: kTitleTextstyle,
+                                  ));
+                            case 12:
+                            case 14:
+                            case 16:
+                            case 18:
+                            case 20:
+                            case 22:
+                            case 24:
+                            case 26:
+                            case 28:
+                            case 30:
+                            case 32:
+                            case 34:
+                            case 36:
+                            case 38:
+                              return _foodRecommendationNearMe(context,
+                                  Random().nextInt(widget.foodPhoto.length));
+                            case 13:
+                            case 15:
+                            case 17:
+                            case 19:
+                            case 21:
+                            case 23:
+                            case 25:
+                            case 27:
+                            case 29:
+                            case 31:
+                            case 33:
+                            case 35:
+                            case 37:
+                            case 39:
+                              return _dividerSmall(context);
                             default:
-                              return _divider(context);
+                              return _dividerLarge(context);
                           }
                         })),
               ],
@@ -197,16 +265,17 @@ class HomePageState extends State<HomePage> {
       alignment: Alignment.bottomRight,
       children: <Widget>[
         CarouselSlider(
-          items: widget.banners
+          items: widget.foodPhoto
               .map((item) => Container(
                     width: MediaQuery.of(context).size.width,
                     height: heightBanner,
                     child: Center(
-                        child: Image(
-                            width: MediaQuery.of(context).size.width,
-                            height: heightBanner,
-                            fit: BoxFit.cover,
-                            image: AssetImage(item))),
+                        child: Image.network(
+                      item,
+                      width: MediaQuery.of(context).size.width,
+                      height: heightBanner,
+                      fit: BoxFit.cover,
+                    )),
                   ))
               .toList(),
           carouselController: widget.bannerController,
@@ -231,7 +300,7 @@ class HomePageState extends State<HomePage> {
                   margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
                   alignment: Alignment.center,
                   height: 35,
-                  width: 65,
+                  width: _currentBanner + 1 <= 9 ? 80 : 85,
                   decoration: BoxDecoration(
                     color: Color(0xFFeaf0d6).withOpacity(0.8),
                     borderRadius: BorderRadius.only(
@@ -243,7 +312,7 @@ class HomePageState extends State<HomePage> {
                       Padding(
                           padding: EdgeInsets.fromLTRB(16, 0, 0, 0),
                           child: Text(
-                            "${_currentBanner + 1}/${widget.banners.length}",
+                            "${_currentBanner + 1}/${widget.foodPhoto.length}",
                             style: kTitleTextstyle.copyWith(
                                 fontSize: 14,
                                 fontFamily: "Roboto_Bold",
@@ -252,6 +321,7 @@ class HomePageState extends State<HomePage> {
                       Icon(
                         Icons.navigate_next,
                         color: Colors.black,
+                        size: 25,
                       )
                     ],
                   ),
@@ -294,10 +364,17 @@ class HomePageState extends State<HomePage> {
   }
 
   /// Divider
-  Widget _divider(BuildContext context) {
+  Widget _dividerLarge(BuildContext context) {
     return Container(
       height: 10,
       color: Color(0xFFf4f6fc),
+    );
+  }
+
+  Widget _dividerSmall(BuildContext context) {
+    return Container(
+      height: 0.5,
+      color: Color(0xFFBDBDBD),
     );
   }
 
@@ -432,6 +509,7 @@ class HomePageState extends State<HomePage> {
     );
   }
 
+  /// food today
   Widget _foodRecommendationToday(BuildContext context) {
     return Container(
       color: Colors.white,
@@ -466,8 +544,7 @@ class HomePageState extends State<HomePage> {
                           16),
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(
-                                "https://i.ndtvimg.com/i/2016-12/food-articles-620_620x330_81481705304.jpg"),
+                            image: NetworkImage(widget.foodPhoto[index]),
                             fit: BoxFit.cover,
                           ),
                           border: Border.all(
@@ -536,6 +613,7 @@ class HomePageState extends State<HomePage> {
     );
   }
 
+  /// promo block
   Widget _foodRecommendationPromo(BuildContext context) {
     return Container(
       color: Colors.white,
@@ -557,18 +635,18 @@ class HomePageState extends State<HomePage> {
                 Material(
                     color: Colors.white.withOpacity(0.0),
                     child: InkWell(
-                        onTap: (){},
+                        onTap: () {},
                         child: Text("Xem",
-                    style: kNomalTextStyle.copyWith(
-                        fontFamily: "Roboto_Bold",
-                        fontWeight: FontWeight.bold,
-                        color: kColorAccent))))
+                            style: kNomalTextStyle.copyWith(
+                                fontFamily: "Roboto_Bold",
+                                fontWeight: FontWeight.bold,
+                                color: kColorAccent))))
               ],
             ),
           ),
           Expanded(
             child: ListView.separated(
-                itemCount: widget.address.length,
+                itemCount: widget.foodPhoto.length,
                 separatorBuilder: (BuildContext context, int index) => SizedBox(
                       width: 8,
                     ),
@@ -577,66 +655,183 @@ class HomePageState extends State<HomePage> {
                 itemBuilder: (BuildContext context, int index) {
                   return Material(
                       color: Colors.white.withOpacity(0.0),
-                  child: InkWell(
-                      onTap: (){
-                        _displaySnackBar(context, widget.address[index]);
-                      },
-                      child: Container(
-                    margin: EdgeInsets.fromLTRB(index == 0 ? 16:0, 16, widget.foodRecommendationToday.length -1 == index ? 16:0, 16),
-                      color: Colors.transparent,
-                      width: MediaQuery.of(context).size.width / 2.5,
-                      child: Stack(
-                        alignment: Alignment.topLeft,
-                        children: <Widget>[
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Expanded(child:Container(
-                                  margin: EdgeInsets.fromLTRB(8, 8, 0, 0),
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                            widget.foodPhoto[index]),
-                                        fit: BoxFit.cover,
-                                      ),
-                                      border: Border.all(
-                                        color: Colors.white70, //
-                                      ),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(5.0))),
-                                  )),
-                              Stack(
+                      child: InkWell(
+                          onTap: () {
+                            _displaySnackBar(context, widget.address[index]);
+                          },
+                          child: Container(
+                              margin: EdgeInsets.fromLTRB(
+                                  index == 0 ? 16 : 0,
+                                  16,
+                                  widget.address.length - 1 ==
+                                          index
+                                      ? 16
+                                      : 0,
+                                  16),
+                              color: Colors.transparent,
+                              width: MediaQuery.of(context).size.width / 2.5,
+                              child: Stack(
+                                alignment: Alignment.topLeft,
                                 children: <Widget>[
-                                  Padding(
-                                      padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
-                                      child: Image.asset(
-                                        "assets/icons/flag.png",
-                                        fit: BoxFit.fitWidth,
-                                        width: 15,
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      Expanded(
+                                          child: Container(
+                                        margin: EdgeInsets.fromLTRB(8, 8, 0, 0),
+                                        decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                  widget.foodPhoto[index]),
+                                              fit: BoxFit.cover,
+                                            ),
+                                            border: Border.all(
+                                              color: Colors.white70, //
+                                            ),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(5.0))),
                                       )),
-                                  Padding(
-                                      padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
-                                      child: Text(
-                                        "     ${widget.address[index]}",
-                                        maxLines: 2,
-                                        style: kNomalTextStyle.copyWith(color: Colors.black,fontFamily: "Roboto_Medium",fontWeight: FontWeight.w500),
-                                      ))
+                                      Stack(
+                                        children: <Widget>[
+                                          Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  8, 8, 0, 0),
+                                              child: Image.asset(
+                                                "assets/icons/flag.png",
+                                                fit: BoxFit.fitWidth,
+                                                width: 15,
+                                              )),
+                                          Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  8, 8, 0, 0),
+                                              child: Text(
+                                                "     ${widget.address[index]}",
+                                                maxLines: 2,
+                                                style: kNomalTextStyle.copyWith(
+                                                    color: Colors.black,
+                                                    fontFamily: "Roboto_Medium",
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ))
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                  Image.asset(
+                                    "assets/icons/promo.png",
+                                    fit: BoxFit.fitHeight,
+                                    height: 20,
+                                  )
                                 ],
-                              )
-                            ],
-                          ),
-                          Image.asset(
-                            "assets/icons/promo.png",
-                            fit: BoxFit.fitHeight,
-                            height: 20,
-                          )
-                        ],
-                      ))));
+                              ))));
                 }),
           )
         ],
       ),
     );
+  }
+
+  /// around me
+  Widget _foodRecommendationNearMe(BuildContext context, int index) {
+    return Material(
+        color: Colors.white.withOpacity(0.0),
+        child: InkWell(
+        onTap: () {
+      _displaySnackBar(context, widget.address[index]);
+    },
+    child: Container(
+      padding: EdgeInsets.all(16),
+      color: Colors.transparent,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Stack(
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width / 4.5,
+                height: MediaQuery.of(context).size.width / 4.5,
+                margin: EdgeInsets.fromLTRB(8, 8, 0, 0),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(widget.foodPhoto[index]),
+                      fit: BoxFit.cover,
+                    ),
+                    border: Border.all(
+                      color: Colors.white70, //
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(5.0))),
+              ),
+              Visibility(
+                visible: index % 2 == 0,
+                child: Image.asset(
+                  "assets/icons/promo.png",
+                  fit: BoxFit.fitHeight,
+                  height: 20,
+                ),
+              )
+            ],
+          ),
+          SizedBox(
+            width: 16,
+            height: 1,
+          ),
+          Expanded(child:
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
+              height: MediaQuery.of(context).size.width / 4.5,
+              color: Colors.transparent,
+              child:Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Image.asset(
+                    "assets/icons/flag.png",
+                    fit: BoxFit.fitWidth,
+                    width: 15,
+                  ),
+                  Expanded(child:Text(
+                    " ${widget.address[index]}",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: kNomalTextStyle.copyWith(
+                        color: Colors.black,
+                        fontFamily: "Roboto_Medium",
+                        fontWeight: FontWeight.w500),
+                  ))
+                ],
+              ),
+              Padding(
+                  padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
+                  child: Text(
+                    "Gà tắm nước mắm",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style:
+                        kNomalTextStyle.copyWith(fontFamily: "Roboto_Regular"),
+                  )),
+              Expanded(child: Container(
+                alignment: Alignment.bottomLeft,
+                color: Colors.transparent,
+                child: Text(
+                  "${index}km",
+                  overflow: TextOverflow.ellipsis,
+                  style: kNomalTextStyle.copyWith(fontFamily: "Roboto_Regular"),
+                ),
+              ))
+            ],
+          )))
+        ],
+      ),
+    )));
   }
 }
